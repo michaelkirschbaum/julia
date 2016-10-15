@@ -60,9 +60,9 @@ function extendhfsf2(val::Float16)
     return reinterpret(Float32, ret)
 end
 if is_apple()
-    register(extendhfsf2, Float16, Tuple{Float32}, "__extendhfsf2")
+    register(extendhfsf2, Float32, Tuple{Float16}, "__extendhfsf2")
 else
-    register(extendhfsf2, Float16, Tuple{Float32}, "__gnu_h2f_ieee")
+    register(extendhfsf2, Float32, Tuple{Float16}, "__gnu_h2f_ieee")
 end
 
 function truncsfhf2(val::Float32)
@@ -90,7 +90,7 @@ else
 end
 
 function truncdfhf2(x::Float64)
-   return truncsfhf2(convert(Float32, x))
+    throw(MethodError(truncdfhf2, x))
 end
 register(truncdfhf2, Float16, Tuple{Float64}, "__truncdfhf2")
 
